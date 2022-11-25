@@ -62,9 +62,17 @@ const actualizarEstado = async (req = request, res = response) => {
     usuariodb,
   });
 };
+const listarUsuarios = async (req = request, res = response) => {
+  const usuariodb = await usuario.find();
+  res.json({
+    ok: false,
+    usuariodb,
+  });
+};
 module.exports = {
   CrearUsuario,
   actualizarUsuario,
   actualizarRol,
-  actualizarEstado
+  actualizarEstado,
+  listarUsuarios
 };

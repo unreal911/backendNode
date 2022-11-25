@@ -5,15 +5,20 @@ const {
   actualizarUsuario,
   actualizarRol,
   actualizarEstado,
+  listarUsuarios,
 } = require("../controllers/usuario");
 const { existeModelo, noexisteModelo } = require("../helpers/validarModelo");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { verificarToken } = require("../middlewares/validar-jwt");
-const { esAdminRole } = require("../middlewares/validar-roles");
+const {
+  esAdminRole,
+  validarAdminUsuario,
+} = require("../middlewares/validar-roles");
 const usuario = require("../models/Usuario");
 
 const router = Router();
 
+router.get("/", [], listarUsuarios);
 router.post(
   "/",
   [
@@ -29,6 +34,7 @@ router.put(
   "/:id",
   [
     verificarToken,
+    validarAdminUsuario,
     check("id", "debe ser un id valido").isMongoId(),
     check("email").custom((email) => existeModelo(email, "email", usuario)),
     validarCampos,
