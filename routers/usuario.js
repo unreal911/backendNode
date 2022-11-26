@@ -18,7 +18,11 @@ const usuario = require("../models/Usuario");
 
 const router = Router();
 
-router.get("/", [], listarUsuarios);
+router.get(
+  "/listar/:limite/:desde",
+  [verificarToken, esAdminRole, validarCampos],
+  listarUsuarios
+);
 router.post(
   "/",
   [

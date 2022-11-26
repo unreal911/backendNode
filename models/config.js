@@ -7,7 +7,8 @@ class Server {
     this.port = process.env.PORT;
     this.rutas = {
       usuario: `/api/usuario`,
-      auth:'/api/auth'
+      auth:'/api/auth',
+      categoria:'/api/categoria'
     };
     this.middlewares()
     this.mongoCN()
@@ -24,6 +25,7 @@ class Server {
   routers() {
     this.app.use(this.rutas.usuario, require("../routers/usuario"));
     this.app.use(this.rutas.auth,require('../routers/auth'))
+    this.app.use(this.rutas.categoria,require('../routers/categoria'))
   }
   listen() {
     this.app.listen(this.port, () =>

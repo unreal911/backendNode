@@ -63,10 +63,15 @@ const actualizarEstado = async (req = request, res = response) => {
   });
 };
 const listarUsuarios = async (req = request, res = response) => {
-  const usuariodb = await usuario.find();
+  const { limite = 5, desde = 0 } = req.query;
+  const [total, usuarios] = await Promise.all([
+    Usuario.countDocuments(),
+    Usuario.find().skip(Number(desde)).limit(Number(limite)),
+  ]);
+
   res.json({
-    ok: false,
-    usuariodb,
+    total,
+    usuarios,
   });
 };
 module.exports = {
@@ -74,5 +79,5 @@ module.exports = {
   actualizarUsuario,
   actualizarRol,
   actualizarEstado,
-  listarUsuarios
+  listarUsuarios,
 };
