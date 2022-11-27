@@ -18,8 +18,6 @@ const CrearUsuario = async (req = request, res = response) => {
 const actualizarUsuario = async (req = request, res = response) => {
   const { id } = req.params;
   const { password, estado, rol, ...nuevoBody } = req.body;
-  const usuariotoken = req.usuario;
-
   if (password) {
     let salt = bcrypt.genSaltSync(10);
     nuevoPassword = bcrypt.hashSync(password, salt);
@@ -33,7 +31,6 @@ const actualizarUsuario = async (req = request, res = response) => {
   res.json({
     ok: true,
     usuariodb,
-    usuariotoken,
   });
 };
 const actualizarRol = async (req = request, res = response) => {
