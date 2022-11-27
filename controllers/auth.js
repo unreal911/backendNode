@@ -30,10 +30,10 @@ const renovarToken = async (req = request, res = response) => {
   const usuario = req.usuario
   const token = await generarJWT(id)
   res.json({
-      ok: true,
-      msg: 'Estas en el renovar token',
-      token,
-      usuario,
+    ok: true,
+    msg: 'Estas en el renovar token',
+    token,
+    usuario,
   })
 }
 module.exports = {
