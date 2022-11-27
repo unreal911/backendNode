@@ -7,13 +7,18 @@ const {
   actualizarEstado,
   listarUsuarios,
 } = require("../controllers/usuario");
-const { existeModelo, noexisteModelo } = require("../helpers/validarModelo");
+const {
+  existeModelo,
+  noexisteModelo,
+  existeidModelo,
+} = require("../helpers/validarModelo");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { verificarToken } = require("../middlewares/validar-jwt");
 const {
   esAdminRole,
   validarAdminUsuario,
 } = require("../middlewares/validar-roles");
+const Usuario = require("../models/Usuario");
 const usuario = require("../models/Usuario");
 
 const router = Router();
@@ -51,7 +56,7 @@ router.put(
     verificarToken,
     esAdminRole,
     check("id", "el id no es valido").notEmpty().isMongoId(),
-    check("id").custom((id) => noexisteModelo(id, "id", usuario)),
+    check("id").custom((id) => existeidModelo(id, Usuario)),
     check("rol", "No es un rol valido").isIn([
       "ADMIN_ROL",
       "USER_ROL",
@@ -67,7 +72,7 @@ router.put(
     verificarToken,
     esAdminRole,
     check("id", "el id no es valido").notEmpty().isMongoId(),
-    check("id").custom((id) => noexisteModelo(id, "id", usuario)),
+    check("id").custom((id) => existeidModelo(id, Usuario)),
     check("estado", "el estado es obligatorio").notEmpty(),
     validarCampos,
   ],

@@ -6,7 +6,11 @@ const {
   actualizarCategoria,
   categoriaxid,
 } = require("../controllers/categoria");
-const { existeModelo, noexisteModelo } = require("../helpers/validarModelo");
+const {
+  existeModelo,
+  noexisteModelo,
+  existeidModelo,
+} = require("../helpers/validarModelo");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { verificarToken } = require("../middlewares/validar-jwt");
 const Categoria = require("../models/Categoria");
@@ -31,7 +35,7 @@ router.get(
     verificarToken,
     check("id", "el id debe ser valido").isMongoId(),
     check("id", "el id es queredido").notEmpty(),
-    check("id").custom((id) => noexisteModelo(id, "id", Categoria)),
+    check("id").custom((id) => existeidModelo(id, Categoria)),
     validarCampos,
   ],
   categoriaxid
@@ -42,7 +46,7 @@ router.put(
     verificarToken,
     check("id", "el id debe ser valido").isMongoId(),
     check("id", "el id es queredido").notEmpty(),
-    check("id").custom((id) => noexisteModelo(id, "id", Categoria)),
+    check("id").custom((id) => existeidModelo(id, Categoria)),
     validarCampos,
   ],
   actualizarCategoria
