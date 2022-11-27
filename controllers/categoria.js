@@ -1,14 +1,31 @@
 const { request, response } = require("express");
 const Categoria = require("../models/Categoria");
-
 const crearCategoria = (req = request, res = response) => {
   console.log(req.usuario._id);
   req.body.usuario = req.usuario._id;
   const categoriaDB = new Categoria(req.body);
   categoriaDB.save();
-  res.json({
-    ok: false,
-    categoriaDB,
+  return res.json({
+    ok: true,
+    retsult: categoriaDB,
+  });
+};
+const actualizarCategoria = async (req = request, res = response) => {
+  const { id } = req.params;
+  const { usuario, ...nuevoBody } = req.body;
+  nuevoBody.usuario = req.usuario._id;
+  const categoriaDB = await Categoria.findByIdAndUpdate(id, nuevoBody, { new: true });
+  return res.json({
+    ok: true,
+    results: categoriaDB,
+  });
+};
+const categoriaxid = async (req = request, res = response) => {
+  const { id } = req.params;
+  const categoriaDB = await Categoria.findById(id);
+  return res.json({
+    ok: true,
+    result: categoriaDB,
   });
 };
 const listarCategorias = async (req = request, res = response) => {
@@ -26,4 +43,6 @@ const listarCategorias = async (req = request, res = response) => {
 module.exports = {
   crearCategoria,
   listarCategorias,
+  actualizarCategoria,
+  categoriaxid
 };

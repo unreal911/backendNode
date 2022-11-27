@@ -3,12 +3,15 @@ const { check } = require("express-validator");
 const {
   crearCategoria,
   listarCategorias,
+  actualizarCategoria,
+  categoriaxid,
 } = require("../controllers/categoria");
-const { existeModelo } = require("../helpers/validarModelo");
+const { existeModelo, noexisteModelo } = require("../helpers/validarModelo");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { verificarToken } = require("../middlewares/validar-jwt");
 const Categoria = require("../models/Categoria");
 const router = Router();
+
 router.post(
   "/",
   [
@@ -22,5 +25,31 @@ router.post(
   ],
   crearCategoria
 );
-router.get("/listar/:limite/:desde", [verificarToken, validarCampos], listarCategorias);
+router.get(
+  "/:id",
+  [
+    verificarToken,
+    check("id", "el id debe ser valido").isMongoId(),
+    check("id", "el id es queredido").notEmpty(),
+    check("id").custom((id) => noexisteModelo(id, "id", Categoria)),
+    validarCampos,
+  ],
+  categoriaxid
+);
+router.put(
+  "/:id",
+  [
+    verificarToken,
+    check("id", "el id debe ser valido").isMongoId(),
+    check("id", "el id es queredido").notEmpty(),
+    check("id").custom((id) => noexisteModelo(id, "id", Categoria)),
+    validarCampos,
+  ],
+  actualizarCategoria
+);
+router.get(
+  "/listar/:limite/:desde",
+  [verificarToken, validarCampos],
+  listarCategorias
+);
 module.exports = router;
