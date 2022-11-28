@@ -42,7 +42,7 @@ const actualizarRol = async (req = request, res = response) => {
     { new: true }
   );
   return res.json({
-    ok: false,
+    ok: true,
     usuariodb,
   });
 };
@@ -55,12 +55,12 @@ const actualizarEstado = async (req = request, res = response) => {
     { new: true }
   );
   return res.json({
-    ok: false,
+    ok: true,
     usuariodb,
   });
 };
 const listarUsuarios = async (req = request, res = response) => {
-  const { limite = 5, desde = 0 } = req.query;
+  const { limite = 5, desde = 0 } = req.params;
   const [total, usuarios] = await Promise.all([
     Usuario.countDocuments(),
     Usuario.find().skip(Number(desde)).limit(Number(limite)),
