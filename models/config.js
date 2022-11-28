@@ -10,7 +10,8 @@ class Server {
       auth: "/api/auth",
       categoria: "/api/categoria",
       producto: "/api/producto",
-      busqueda: "/api/busqueda"
+      busqueda: "/api/busqueda",
+      subirImagen:"/api/subirimagen"
     };
     this.middlewares();
     this.mongoCN();
@@ -29,6 +30,7 @@ class Server {
     this.app.use(this.rutas.categoria, require("../routers/categoria"));
     this.app.use(this.rutas.producto, require("../routers/producto"));
     this.app.use(this.rutas.busqueda, require("../routers/busqueda"))
+    this.app.use(this.rutas.subirImagen,require("../routers/subirImagen"))
   }
   listen() {
     this.app.listen(this.port, () =>
