@@ -78,7 +78,7 @@ const actualizarPassword = async (req = request, res = response) => {
   const pwdiguales = bcrypt.compareSync(passwordOld, usuariodb.password);
   console.log(usuariodb)
   if (!pwdiguales) {
-    return res.json({
+    return res.status(402).json({
       ok: false,
       msg: `La contraseña actual no coincide`
     })
