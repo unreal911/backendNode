@@ -80,6 +80,7 @@ router.put(
   actualizarEstado
 );
 router.put('/actualizarpwd/:id', [
+  verificarToken,
   check('id', 'el id no debe estar vacio').notEmpty(),
   check('id', 'debe ser un id valido').isMongoId(),
   check('passwordNew', 'el password nuevo es requerido').notEmpty(),
