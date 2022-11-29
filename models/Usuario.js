@@ -21,6 +21,10 @@ const UsuarioSchema = Schema({
             url: "nodefinido",
         },
     },
+    telefono:{
+        type:String,
+        default:''
+    },
     rol: {
         type: String,
         required: true,
