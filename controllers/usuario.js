@@ -71,10 +71,35 @@ const listarUsuarios = async (req = request, res = response) => {
     usuarios,
   });
 };
+const actualizarPassword = async (req = request, res = response) => {
+  const { passwordNew, passwordOld } = req.body
+  const { id } = req.params
+  const usuariodb = await Usuario.findById(id)
+  const pwdiguales = bcrypt.compareSync(passwordOld, usuariodb.password);
+  console.log(usuariodb)
+  if (!pwdiguales) {
+    return res.json({
+      ok: false,
+      msg: `La contraseña actual no coincide`
+    })
+  }
+  let salt = bcrypt.genSaltSync(10);
+  nuevoPassword = bcrypt.hashSync(passwordNew, salt);
+  //tener cuidado con el findbyid y findone regresan resultados distintos
+  const updatePWD = await Usuario.findByIdAndUpdate(id, { password: nuevoPassword }, { new: true })
+  //console.log(updatePWD)
+  return res.json({
+    ok: true,
+    result: updatePWD
+  })
+
+
+}
 module.exports = {
   CrearUsuario,
   actualizarUsuario,
   actualizarRol,
   actualizarEstado,
   listarUsuarios,
+  actualizarPassword
 };

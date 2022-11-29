@@ -6,6 +6,7 @@ const {
   actualizarRol,
   actualizarEstado,
   listarUsuarios,
+  actualizarPassword,
 } = require("../controllers/usuario");
 const {
   existeModelo,
@@ -78,5 +79,12 @@ router.put(
   ],
   actualizarEstado
 );
+router.put('/actualizarpwd/:id', [
+  check('id', 'el id no debe estar vacio').notEmpty(),
+  check('id', 'debe ser un id valido').isMongoId(),
+  check('passwordNew', 'el password nuevo es requerido').notEmpty(),
+  check('passwordOld', 'El password actual es requerido').notEmpty(),
+  validarCampos
+], actualizarPassword)
 
 module.exports = router;
