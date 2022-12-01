@@ -10,7 +10,7 @@ const existeModelo = async (valor, campo, Modelo) => {
   const existeModelo = await Modelo.findOne(obj);
   if (existeModelo) {
     throw new Error(
-      `El campo ${campo} : ${valor} , existe en la base de datos`
+      `El ${campo} : ${valor} , existe en la base de datos`
     );
   }
 };
@@ -25,7 +25,7 @@ const noexisteModelo = async (valor, campo, Modelo) => {
   const modeloDB = await Modelo.findOne(obj);
   if (!modeloDB) {
     throw new Error(
-      `El valor ${campo} : ${valor} , no existe en la base de datos`
+      `El  ${campo} : ${valor} , no existe en la base de datos`
     );
   }
 };

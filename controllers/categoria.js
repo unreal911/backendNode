@@ -7,7 +7,7 @@ const crearCategoria = (req = request, res = response) => {
   categoriaDB.save();
   return res.json({
     ok: true,
-    retsult: categoriaDB,
+    result: categoriaDB,
   });
 };
 const actualizarCategoria = async (req = request, res = response) => {
@@ -31,7 +31,7 @@ const categoriaxid = async (req = request, res = response) => {
   });
 };
 const listarCategorias = async (req = request, res = response) => {
-  const { limite = 5, desde = 0 } = req.query;
+  const { limite = 5, desde = 0 } = req.params;
   const [total, categorias] = await Promise.all([
     Categoria.countDocuments(),
     Categoria.find().skip(Number(desde)).limit(Number(limite)),
