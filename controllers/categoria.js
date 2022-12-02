@@ -42,9 +42,18 @@ const listarCategorias = async (req = request, res = response) => {
     results: categorias,
   });
 };
+const eliminarCategoria = async (req = request, res = response) => {
+  const { id } = req.params
+  const categoriadb = await Categoria.findOneAndDelete(id)
+  res.json({
+    ok: true,
+    msg: 'categoria Eliminada'
+  })
+}
 module.exports = {
   crearCategoria,
   listarCategorias,
   actualizarCategoria,
   categoriaxid,
+  eliminarCategoria
 };

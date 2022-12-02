@@ -5,6 +5,7 @@ const {
   listarCategorias,
   actualizarCategoria,
   categoriaxid,
+  eliminarCategoria,
 } = require("../controllers/categoria");
 const {
   existeModelo,
@@ -47,6 +48,9 @@ router.put(
     check("id", "el id debe ser valido").isMongoId(),
     check("id", "el id es queredido").notEmpty(),
     check("id").custom((id) => existeidModelo(id, Categoria)),
+    check("nombre").custom((nombre) =>
+      existeModelo(nombre, "nombre", Categoria)
+    ),
     validarCampos,
   ],
   actualizarCategoria
@@ -56,4 +60,11 @@ router.get(
   [verificarToken, validarCampos],
   listarCategorias
 );
+router.delete('/:id', [
+  verificarToken,
+  check("id", "el id debe ser valido").isMongoId(),
+  check("id", "el id es queredido").notEmpty(),
+  check("id").custom((id) => existeidModelo(id, Categoria)),
+  validarCampos],
+  eliminarCategoria)
 module.exports = router;
