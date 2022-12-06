@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { subirImagen } = require("../controllers/SubirImagen");
+const { subirImagen, subirImagenFirebase } = require("../controllers/SubirImagen");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { verificarToken } = require("../middlewares/validar-jwt");
 const router = Router();
@@ -13,4 +13,5 @@ router.post("/:coleccion/:id", [
     check('coleccion','la coleccion debe ser validad').isIn(['usuarios','categorias','productos']),
     validarCampos
 ], subirImagen);
+router.post('/:colecccion',[],subirImagenFirebase)
 module.exports = router;
