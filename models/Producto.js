@@ -25,7 +25,7 @@ const ProductoSchema = Schema({
     ref: "Categoria",
     required: true,
   },
-  descripcion: { type: String,default:'Sin descripcion' },
+  descripcion: { type: String, default: 'Sin descripcion' },
   disponible: { type: Boolean, defult: true },
   img: {
     type: Array,
@@ -40,8 +40,8 @@ const ProductoSchema = Schema({
 });
 
 ProductoSchema.methods.toJSON = function () {
-  const { __v,_id, estado, ...data } = this.toObject();
-  data.uid=_id
+  const { __v, _id, estado, ...data } = this.toObject();
+  data.uid = _id
   return data;
 };
 
